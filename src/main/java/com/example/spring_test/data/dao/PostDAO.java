@@ -8,14 +8,11 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.TimeZone;
+
 
 @Service
 @RequiredArgsConstructor
@@ -42,28 +39,32 @@ public class PostDAO {
         throw new EntityNotFoundException("username not found");
     }
 
-    public void saveUpdatedPost(Integer id,String title, String text) {
+    public void saveUpdatedPost(Integer id, String username, String title, String text) {
             Optional<PostEntity> post = this.postRepository.findById(id);
             if (post.isPresent()) {
                 PostEntity postEntity = post.get();
-                postEntity.setTitle(title);
-                postEntity.setText(text);
-                postEntity.setUpdated(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
-                this.postRepository.save(postEntity);
-                return;
+                if(postEntity.getUsername().getUsername().equals(username)) {
+                    postEntity.setTitle(title);
+                    postEntity.setText(text);
+                    postEntity.setUpdated(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+                    this.postRepository.save(postEntity);
+                    return;
+                }
+                throw new EntityNotFoundException("username not matched");
         }
         throw new EntityNotFoundException("username not found");
     }
 
-    public void deletePost(Integer id) {
+    public void deletePost(Integer id, String username) {
         Optional<PostEntity> post = this.postRepository.findById(id);
         if (post.isPresent()) {
-            this.postRepository.delete(post.get());
-            return;
+            PostEntity postEntity = post.get();
+            if (postEntity.getUsername().getUsername().equals(username)) {
+                this.postRepository.deleteById(id);
+                return;
+            }
+            throw new EntityNotFoundException("username not matched");
         }
         throw new EntityNotFoundException("username not found");
     }
-
-
-
 }

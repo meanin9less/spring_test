@@ -3,7 +3,6 @@ package com.example.spring_test.controller;
 import com.example.spring_test.data.dto.PostDTO;
 import com.example.spring_test.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +29,9 @@ public class PostController {
         return ResponseEntity.ok(this.postService.saveUpdatedPost(postDTO));
     }
 
-    @PostMapping(value = "/deletepost")
-    public ResponseEntity<String> deletePost(@RequestBody Integer id) {
-        return ResponseEntity.ok(this.postService.deletePost(id));
+    @DeleteMapping(value = "/deletepost")
+    public ResponseEntity<String> deletePost(@RequestParam String id, String username) {
+         Integer postId = Integer.parseInt(id);
+        return ResponseEntity.ok(this.postService.deletePost(postId, username));
     }
 }

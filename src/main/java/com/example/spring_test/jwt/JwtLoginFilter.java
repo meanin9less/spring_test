@@ -1,6 +1,5 @@
 package com.example.spring_test.jwt;
 
-import com.example.spring_test.data.dao.AuthenticationDAO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -40,7 +39,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         return authenticationManager.authenticate(authToken);
     }
 
-    @Override // 오버라이딩할때 권한설정 가능 ( 넓은 권한으로 바꾸는건 가능 ex) protected > public
+    @Override
     public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                          Authentication authResult) throws IOException, ServletException {
         UserDetails userDetails = (UserDetails) authResult.getPrincipal(); // getPrincipal 리턴값 : Object
@@ -89,7 +88,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     private Cookie createCookie(String key, String value) {
         Cookie cookie = new Cookie(key, value);
         cookie.setPath("/"); //브라우저에 저장될 쿠키가 프론트에서 보내는 모든 url경로의 요청에 포함되게 하겠다.
-        cookie.setHttpOnly(true); // 브라우저에서 , 프론트에서 사용할 수 없음 withcredential true면 그냥 포함되게만 사용ㅇ은 불가능
+        cookie.setHttpOnly(true); // 브라우저에서 , 프론트에서 사용할 수 없음 withcredential true면 그냥 포함되게만 함
         cookie.setMaxAge(60*60*24); // 밀리초 x 초단위
         return cookie;
     }

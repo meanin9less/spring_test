@@ -14,6 +14,7 @@ apiClient.interceptors.request.use((config) => { // config로 요청객체 들�
     if (config.data && config.data instanceof URLSearchParams) {
         config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
+    
     const accessToken = store.getState().board.accessToken; // redux에 저장된거 콜백함수에서는 use훅 사용 x 
     if(accessToken){
         config.headers["Authorization"] = accessToken;

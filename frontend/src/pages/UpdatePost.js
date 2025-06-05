@@ -9,6 +9,7 @@ const UpdatePost = () => {
     const {postid} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const login = useSelector(state=>state.board.login);
     const post = useSelector(state=>state.board.posts.find(p=>p.id===Number(postid)));
     const [title, setTitle] = useState(post.title);
     const [text, setText] = useState(post.text);
@@ -19,7 +20,8 @@ const UpdatePost = () => {
             const res = await apiClient.post("/board/updatepost",{
                 id:Number(post.id),
                 title:title,
-                text:text
+                text:text,
+                username:login.username
             });
             console.log(res.data);
             const res2 = await apiClient.get("/board/postlist");

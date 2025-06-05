@@ -3,11 +3,9 @@ package com.example.spring_test.service;
 import com.example.spring_test.data.dao.PostDAO;
 import com.example.spring_test.data.dto.PostDTO;
 import com.example.spring_test.data.entity.PostEntity;
-import com.example.spring_test.data.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,14 +45,15 @@ public class PostService {
     public String saveUpdatedPost(PostDTO postDTO) {
         this.postDAO.saveUpdatedPost(
                 postDTO.getId(),
+                postDTO.getUsername(),
                 postDTO.getTitle(),
                 postDTO.getText()
         );
         return "Post Updated";
     }
 
-    public String deletePost(Integer id) {
-        this.postDAO.deletePost(id);
+    public String deletePost(Integer id, String username) {
+        this.postDAO.deletePost(id, username);
         return "Post Deleted";
     }
 }
