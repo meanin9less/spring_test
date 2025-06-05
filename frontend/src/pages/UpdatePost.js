@@ -23,7 +23,6 @@ const UpdatePost = () => {
                 text:text,
                 username:login.username
             });
-            console.log(res.data);
             const res2 = await apiClient.get("/board/postlist");
             dispatch(setPosts(res2.data));
             navigate("/board/detail/"+postid);

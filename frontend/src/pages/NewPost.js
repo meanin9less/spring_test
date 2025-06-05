@@ -18,7 +18,6 @@ const NewPost = () => {
                 text:e.target.text.value,
             });
             navigate("/");
-            console.log(res.data);
         }catch(err){
             console.log(err);
         }

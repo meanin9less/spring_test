@@ -25,7 +25,6 @@ const DetailPost = () => {
                     username:login.username
                 }
             });
-            console.log(res.data);
             alert(res.data);
             navigate("/");
         }catch(err){

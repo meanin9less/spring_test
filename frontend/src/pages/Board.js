@@ -14,7 +14,6 @@ const Board = () => {
             try{
                 const res = await apiClient.get("/board/postlist");
                 dispatch(setPosts(res.data));
-                console.log(res.data);
             }catch(err){
                 console.log(err);
             }
